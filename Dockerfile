@@ -5,13 +5,13 @@ FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
 # Gradle 빌드 파일과 설정 파일을 복사
-COPY build.gradle.kts settings.gradle.kts /app/
+COPY build.gradle settings.gradle /app/
 
 # Gradle 종속성을 먼저 다운로드 (캐시 활용)
 RUN ./gradlew dependencies --no-daemon
 
 # 나머지 애플리케이션 파일을 복사
-COPY src /app
+COPY src /app/src
 
 # 애플리케이션을 빌드
 RUN ./gradlew bootJar --no-daemon
