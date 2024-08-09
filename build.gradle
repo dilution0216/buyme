@@ -40,6 +40,8 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     // Mockito (테스트 용도) 라이브러리 필요할경우
     testImplementation 'org.mockito:mockito-core:5.5.0'
+    // Spring Boot Starter Mail 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
