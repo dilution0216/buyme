@@ -6,8 +6,8 @@ services:
       MYSQL_DATABASE: buyme
       MYSQL_USER: user
       MYSQL_PASSWORD: 12345678
-    ports:
-      - "3306:3306"
+#    ports:
+#      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 
