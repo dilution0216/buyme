@@ -1,15 +1,13 @@
 package com.example.buyme.config;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
 public class EncryptionUtil {
 
     private static final String ALGORITHM = "AES";
-    private static final String SECRET_KEY = "1234567890123456"; // 반드시 안전한 방법으로 관리할 것
+    private static final String SECRET_KEY = System.getenv("ENCRYPTION_SECRET_KEY"); // 환경변수에서 비밀 키를 가져옴
 
     public static String encrypt(String value) {
         try {
