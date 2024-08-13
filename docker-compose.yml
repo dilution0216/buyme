@@ -6,8 +6,6 @@ services:
       MYSQL_DATABASE: buyme
       MYSQL_USER: user
       MYSQL_PASSWORD: 12345678
-#    ports:
-#      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 
@@ -22,6 +20,16 @@ services:
       ENCRYPTION_SECRET_KEY: your-very-secret-key
     depends_on:
       - db
+      - redis  # Redis 서비스에 의존성을 추가
+
+  redis:
+    image: "redis:latest"  # Redis의 최신 버전 이미지를 사용
+    ports:
+      - "6379:6379"  # Redis의 기본 포트는 6379
+    volumes:
+      - redis_data:/data  # Redis 데이터를 영구적으로 저장하기 위한 볼륨 설정
+    command: ["redis-server", "--appendonly", "yes"]  # Redis 데이터 지속성을 위해 appendonly 설정
 
 volumes:
   db_data:
+  redis_data:  # Redis 데이터 볼륨을 추가
