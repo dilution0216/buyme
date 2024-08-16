@@ -30,6 +30,13 @@ services:
       - redis_data:/data  # Redis 데이터를 영구적으로 저장하기 위한 볼륨 설정
     command: ["redis-server", "--appendonly", "yes"]  # Redis 데이터 지속성을 위해 appendonly 설정
 
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "8081:8080"  # Adminer를 8081 포트로 노출
+
 volumes:
   db_data:
   redis_data:  # Redis 데이터 볼륨을 추가
