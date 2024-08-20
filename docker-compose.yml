@@ -1,42 +1,65 @@
+version: '3.8'
 services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: buyme
-      MYSQL_USER: user
+      MYSQL_USER: root
       MYSQL_PASSWORD: 12345678
     volumes:
       - db_data:/var/lib/mysql
-
-  app:
-    build: .
     ports:
-      - "8080:8080"
+      - "3306:3306"
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/buyme
-      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 12345678
-      ENCRYPTION_SECRET_KEY: your-very-secret-key
     depends_on:
       - db
-      - redis  # Redis 서비스에 의존성을 추가
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/buyme
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 12345678
+    depends_on:
+      - db
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/buyme
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 12345678
+    depends_on:
+      - db
 
   redis:
-    image: "redis:latest"  # Redis의 최신 버전 이미지를 사용
+    image: "redis:latest"
     ports:
-      - "6379:6379"  # Redis의 기본 포트는 6379
+      - "6379:6379"
     volumes:
-      - redis_data:/data  # Redis 데이터를 영구적으로 저장하기 위한 볼륨 설정
-    command: ["redis-server", "--appendonly", "yes"]  # Redis 데이터 지속성을 위해 appendonly 설정
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
 
   adminer:
     image: adminer
     environment:
       ADMINER_DEFAULT_SERVER: db
     ports:
-      - "8081:8080"  # Adminer를 8081 포트로 노출
+      - "8084:8080"
 
 volumes:
   db_data:
-  redis_data:  # Redis 데이터 볼륨을 추가
+  redis_data:
