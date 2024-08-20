@@ -32,19 +32,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     // JWT 토큰 라이브러리
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    // Mockito (테스트 용도) 라이브러리 필요할경우
-    testImplementation 'org.mockito:mockito-core:5.5.0'
     // Spring Boot Starter Mail 추가
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('bootJar') {
+    enabled = false
 }
