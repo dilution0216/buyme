@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
 # Gradle 빌드 파일과 Gradle Wrapper 스크립트 파일을 복사
-COPY build.gradle settings.gradle gradlew gradlew.bat /app/
+COPY build.gradleff settings.gradle gradlew gradlew.bat /app/
 COPY gradle /app/gradle
 
 # Gradle 종속성을 먼저 다운로드 (캐시 활용)
