@@ -53,6 +53,15 @@ services:
       - redis_data:/data
     command: ["redis-server", "--appendonly", "yes"]
 
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+
   adminer:
     image: adminer
     environment:
