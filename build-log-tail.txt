@@ -1,0 +1,100 @@
+2024-08-28T00:37:39.085+0900 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :order-service:build completed, executed: false
+2024-08-28T00:37:39.085+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on state of build :
+2024-08-28T00:37:39.085+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on task execution for build :
+2024-08-28T00:37:39.085+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2024-08-28T00:37:39.085+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] included builds: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 9: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 9: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 8: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 8: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 7: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 7: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 6: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 6: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 5: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 5: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 4: acquired lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 4: released lock on worker lease
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run tasks'
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run tasks' completed
+2024-08-28T00:37:39.086+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] included builds: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 3: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run main tasks'
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run main tasks' completed
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 4: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 4: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 5: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 5: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 6: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 6: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 7: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 7: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 8: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 8: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 9: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 9: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2024-08-28T00:37:39.087+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Finish root build tree' started
+2024-08-28T00:37:39.088+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Finish root build tree'
+2024-08-28T00:37:39.088+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Finish root build tree' completed
+2024-08-28T00:37:39.089+0900 [LIFECYCLE] [org.gradle.internal.buildevents.TaskExecutionStatisticsReporter] 8 actionable tasks: 3 executed, 5 up-to-date
+2024-08-28T00:37:39.089+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Build finished for file system watching' started
+2024-08-28T00:37:39.090+0900 [INFO] [org.gradle.internal.watch.registry.impl.HierarchicalFileWatcherUpdater] Watched directory hierarchies: [/Users/gimhuiseog/IdeaProjects/buyme]
+2024-08-28T00:37:39.090+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Build finished for file system watching'
+2024-08-28T00:37:39.090+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Build finished for file system watching' completed
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for cache directory md-supplier (/Users/gimhuiseog/.gradle/caches/8.8/md-supplier)
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on cache directory md-supplier (/Users/gimhuiseog/.gradle/caches/8.8/md-supplier).
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for execution history cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/executionHistory)
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache executionHistory.bin (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/executionHistory/executionHistory.bin)
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on execution history cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/executionHistory).
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for Build Output Cleanup Cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/buildOutputCleanup)
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache outputFiles.bin (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/buildOutputCleanup/outputFiles.bin)
+2024-08-28T00:37:39.091+0900 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on Build Output Cleanup Cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/buildOutputCleanup).
+2024-08-28T00:37:39.092+0900 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for cache directory md-rule (/Users/gimhuiseog/.gradle/caches/8.8/md-rule)
+2024-08-28T00:37:39.092+0900 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on cache directory md-rule (/Users/gimhuiseog/.gradle/caches/8.8/md-rule).
+2024-08-28T00:37:39.092+0900 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.CachedStoreFactory] Resolution result cache closed. Cache reads: 0, disk reads: 0 (avg: 0.0 secs, total: 0.0 secs)
+2024-08-28T00:37:39.092+0900 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.CachedStoreFactory] Resolution result cache closed. Cache reads: 50, disk reads: 25 (avg: 0.0 secs, total: 0.0 secs)
+2024-08-28T00:37:39.093+0900 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.ResolutionResultsStoreFactory] Deleted 4 resolution results binary files in 0.0 secs
+2024-08-28T00:37:39.093+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run build'
+2024-08-28T00:37:39.093+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run build' completed
+2024-08-28T00:37:39.093+0900 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 3: released lock on worker lease
+2024-08-28T00:37:39.103+0900 [DEBUG] [org.gradle.deployment.internal.DefaultDeploymentRegistry] Stopping 0 deployment handles
+2024-08-28T00:37:39.103+0900 [DEBUG] [org.gradle.deployment.internal.DefaultDeploymentRegistry] Stopped deployment handles
+2024-08-28T00:37:39.103+0900 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for file hash cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/fileHashes)
+2024-08-28T00:37:39.103+0900 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache fileHashes.bin (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/fileHashes/fileHashes.bin)
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on file hash cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/fileHashes).
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for checksums cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/checksums)
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on checksums cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/checksums).
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultPersistentDirectoryStore] VCS Checkout Cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/vcs-1) has last been fully cleaned up 1 hours ago
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache VCS Checkout Cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/vcs-1) was closed 0 times.
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache VCS metadata (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/vcsMetadata) was closed 0 times.
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache Compressed Files Expansion Cache (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/expanded) was closed 0 times.
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultPersistentDirectoryStore] dependencies-accessors (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/dependencies-accessors) has last been fully cleaned up 1 hours ago
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache dependencies-accessors (/Users/gimhuiseog/IdeaProjects/buyme/.gradle/8.8/dependencies-accessors) was closed 0 times.
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Deleting unused version-specific caches in /Users/gimhuiseog/IdeaProjects/buyme/.gradle' started
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Deleting unused version-specific caches in /Users/gimhuiseog/IdeaProjects/buyme/.gradle'
+2024-08-28T00:37:39.104+0900 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Deleting unused version-specific caches in /Users/gimhuiseog/IdeaProjects/buyme/.gradle' completed
+2024-08-28T00:37:39.115+0900 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+2024-08-28T00:37:39.151+0900 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientInputForwarder] Dispatching close input message: org.gradle.launcher.daemon.protocol.CloseInput@1a9f7a09
+2024-08-28T00:37:39.173+0900 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 26: dispatching class org.gradle.launcher.daemon.protocol.CloseInput
+2024-08-28T00:37:39.173+0900 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClient] Received result Success[value=org.gradle.launcher.exec.BuildActionResult@7e276594] from daemon DaemonInfo{pid=21495, address=[40b4e8c5-3c1a-4b84-8c35-433ef1f503a4 port:57965, addresses:[/127.0.0.1]], state=Idle, lastBusy=1724772620059, context=DefaultDaemonContext[uid=2537ed15-50cb-4b28-9d17-0fd8c5772cca,javaHome=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home,javaVersion=21,daemonRegistryDir=/Users/gimhuiseog/.gradle/daemon,pid=21495,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=--add-opens=java.base/java.util=ALL-UNNAMED,--add-opens=java.base/java.lang=ALL-UNNAMED,--add-opens=java.base/java.lang.invoke=ALL-UNNAMED,--add-opens=java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens=java.base/java.nio.charset=ALL-UNNAMED,--add-opens=java.base/java.net=ALL-UNNAMED,--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED,-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]} (build should be done).
+2024-08-28T00:37:39.173+0900 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: dispatching class org.gradle.launcher.daemon.protocol.Finished
+2024-08-28T00:37:39.174+0900 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: connection stop
+2024-08-28T00:37:39.175+0900 [LIFECYCLE] [org.gradle.launcher.cli.DebugLoggerWarningAction] 
+#############################################################################
+   WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+   Debug level logging will leak security sensitive information!
+
+   For more details, please refer to https://docs.gradle.org/8.8/userguide/logging.html#sec:debug_security in the Gradle documentation.
+#############################################################################
+
