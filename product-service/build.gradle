@@ -12,3 +12,7 @@ dependencies {
 springBoot {
 	mainClass = 'com.example.buyme.product.ProductServiceApplication'
 }
+
+repositories {
+	mavenCentral()
+}

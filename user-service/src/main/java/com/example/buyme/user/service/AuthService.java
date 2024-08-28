@@ -1,11 +1,11 @@
 package com.example.buyme.user.service;
 
-import com.example.buyme.config.JwtTokenProvider;
-import com.example.buyme.dto.JwtAuthenticationResponse;
-import com.example.buyme.dto.LoginRequest;
-import com.example.buyme.entity.User;
-import com.example.buyme.exception.EmailNotVerifiedException;
-import com.example.buyme.repository.UserRepository;
+import com.example.buyme.user.config.JwtTokenProvider;
+import com.example.buyme.user.dto.JwtAuthenticationResponse;
+import com.example.buyme.user.dto.LoginRequest;
+import com.example.buyme.user.entity.User;
+import com.example.buyme.user.exception.EmailNotVerifiedException;
+import com.example.buyme.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

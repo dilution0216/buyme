@@ -1,4 +1,4 @@
-package com.example.buyme.app.config;
+package com.example.buyme.user.config;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;

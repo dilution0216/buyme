@@ -1,6 +1,6 @@
-package com.example.buyme.app.config;
+package com.example.buyme.user.config;
 
-import com.example.buyme.entity.User;
+import com.example.buyme.user.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

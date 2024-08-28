@@ -1,15 +1,16 @@
 package com.example.buyme.user.controller;
 
-import com.example.buyme.dto.JwtAuthenticationResponse;
-import com.example.buyme.dto.LoginRequest;
-import com.example.buyme.dto.SignupRequest;
-import com.example.buyme.entity.User;
-import com.example.buyme.exception.DuplicateEmailException;
-import com.example.buyme.exception.InvalidEmailFormatException;
-import com.example.buyme.exception.InvalidPhoneNumberException;
-import com.example.buyme.service.AuthService;
-import com.example.buyme.service.UserService;
-import com.example.buyme.util.ValidationUtil;
+
+import com.example.buyme.user.dto.JwtAuthenticationResponse;
+import com.example.buyme.user.dto.LoginRequest;
+import com.example.buyme.user.dto.SignupRequest;
+import com.example.buyme.user.entity.User;
+import com.example.buyme.user.exception.DuplicateEmailException;
+import com.example.buyme.user.exception.InvalidEmailFormatException;
+import com.example.buyme.user.exception.InvalidPhoneNumberException;
+import com.example.buyme.user.service.AuthService;
+import com.example.buyme.user.service.UserService;
+import com.example.buyme.user.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AuthController {
             throw new DuplicateEmailException("이미 사용중인 이메일입니다.");
         }
 
-        if (!ValidationUtil.isValidEmail(signupRequest.getUserEmail())) {
+        if (!com.example.buyme.user.util.ValidationUtil.isValidEmail(signupRequest.getUserEmail())) {
             throw new InvalidEmailFormatException("잘못된 이메일 형식입니다");
         }
 
@@ -64,10 +65,10 @@ public class AuthController {
         return ResponseEntity.ok("로그아웃되었습니다.");
     }
 
-    @PutMapping("/logout-all")
-    public ResponseEntity<?> logoutFromAllDevices(@RequestBody String email) {
-        User user = userService.findUserByEmail(email);
-        authService.logoutFromAllDevices(user);
-        return ResponseEntity.ok("모든 기기에서 로그아웃되었습니다.");
-    }
+//    @PutMapping("/logout-all")
+//    public ResponseEntity<?> logoutFromAllDevices(@RequestBody String email) {
+//        User user = userService.findUserByEmail(email);
+//        authService.logoutFromAllDevices(user);
+//        return ResponseEntity.ok("모든 기기에서 로그아웃되었습니다.");
+//    }
 }

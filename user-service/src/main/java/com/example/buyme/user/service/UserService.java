@@ -1,7 +1,7 @@
 package com.example.buyme.user.service;
 
-import com.example.buyme.entity.User;
-import com.example.buyme.repository.UserRepository;
+
+import com.example.buyme.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final com.example.buyme.user.repository.UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User createUser(User user) {

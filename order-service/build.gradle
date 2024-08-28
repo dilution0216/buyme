@@ -6,5 +6,9 @@ dependencies {
 }
 
 springBoot {
-	mainClass = 'com.example.order.OrderServiceApplication'
+	mainClass = 'com.example.buyme.order.OrderServiceApplication'
+}
+
+repositories {
+	mavenCentral()
 }

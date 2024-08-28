@@ -21,12 +21,12 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.6" // Spring Cloud BOM 추가
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.6" // Spring Cloud BOM
         }
     }
 
     dependencies {
-        // 공통으로 사용하는 의존성 정의
+        // 공통 의존성
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -42,12 +42,8 @@ subprojects {
 
         implementation 'org.springframework.boot:spring-boot-docker-compose'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-//		testImplementation 'org.springframework.security:spring-security-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         runtimeOnly 'com.mysql:mysql-connector-j'
-//        implementation 'mysql:mysql-connector-java'
-
     }
 
     group = 'com.example'
@@ -55,5 +51,9 @@ subprojects {
 
     tasks.named('test') {
         useJUnitPlatform()
+    }
+
+    jar {
+        enabled = false
     }
 }

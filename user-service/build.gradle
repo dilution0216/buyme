@@ -1,12 +1,34 @@
 dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // 유효성 검사 관련 의존성
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	// JWT 토큰 라이브러리
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	// Spring Boot Starter Mail 추가
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation project(':app')
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'mysql:mysql-connector-java'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 springBoot {
 	mainClass = 'com.example.buyme.user.UserServiceApplication'
+}
+
+repositories {
+	mavenCentral()
 }
