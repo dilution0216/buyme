@@ -1,15 +1,15 @@
 package com.example.buyme.order.service;
 
-import com.example.buyme.entity.Order;
-import com.example.buyme.entity.OrderItem;
-import com.example.buyme.entity.Product;
-import com.example.buyme.enums.OrderItemStatus;
-import com.example.buyme.enums.OrderStatus;
-import com.example.buyme.repository.OrderItemRepository;
-import com.example.buyme.repository.OrderRepository;
-import com.example.buyme.repository.ProductRepository;
+import com.example.buyme.order.dto.Product;
+import com.example.buyme.order.entity.Order;
+import com.example.buyme.order.entity.OrderItem;
+import com.example.buyme.order.enums.OrderItemStatus;
+import com.example.buyme.order.enums.OrderStatus;
+import com.example.buyme.order.repository.OrderItemRepository;
+import com.example.buyme.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +20,28 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
-    private final ProductRepository productRepository;
+    private final WebClient.Builder webClientBuilder;
+
+    // Product 정보를 API를 통해 가져오는 메소드
+    private Product getProductById(Long productId) {
+        return webClientBuilder.build()
+                .get()
+                .uri("http://gateway-service/products/" + productId)
+                .retrieve()
+                .bodyToMono(Product.class)
+                .block();
+    }
+
+    // Product 재고를 업데이트하는 메소드
+    private void updateProductStock(Product product) {
+        webClientBuilder.build()
+                .put()
+                .uri("http://gateway-service/products/" + product.getProductId())
+                .bodyValue(product)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
 
     public Order createOrder(Order order, List<OrderItem> orderItems) {
         order.setOrderDate(LocalDateTime.now());
@@ -38,7 +59,7 @@ public class OrderService {
     }
 
     public List<Order> getOrdersByUser(Long userId) {
-        return orderRepository.findAllByUserUserId(userId);
+        return orderRepository.findAllByUserId(userId);
     }
 
     public void updateOrdersToShipped() {
@@ -73,9 +94,9 @@ public class OrderService {
 
         // 재고 복구
         for (OrderItem item : order.getOrderItems()) {
-            Product product = item.getProduct();
+            Product product = getProductById(item.getProductId());
             product.setProductStock(product.getProductStock() + item.getOrderItemQuantity());
-            productRepository.save(product);
+            updateProductStock(product);  // product-service에 업데이트 요청
         }
     }
 
@@ -102,8 +123,8 @@ public class OrderService {
         orderItemRepository.save(orderItem);
 
         // 재고 복구
-        Product product = orderItem.getProduct();
+        Product product = getProductById(orderItem.getProductId());
         product.setProductStock(product.getProductStock() + orderItem.getOrderItemQuantity());
-        productRepository.save(product);
+        updateProductStock(product);  // product-service에 업데이트 요청
     }
 }

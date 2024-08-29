@@ -1,7 +1,7 @@
 package com.example.buyme.order.repository;
 
-import com.example.buyme.entity.OrderItem;
-import com.example.buyme.enums.OrderItemStatus;
+import com.example.buyme.order.entity.OrderItem;
+import com.example.buyme.order.enums.OrderItemStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

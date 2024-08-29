@@ -1,7 +1,7 @@
 package com.example.buyme.product.service;
 
-import com.example.buyme.entity.Product;
-import com.example.buyme.repository.ProductRepository;
+import com.example.buyme.product.entity.Product;
+import com.example.buyme.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

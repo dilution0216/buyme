@@ -1,7 +1,7 @@
 package com.example.buyme.product.controller;
 
-import com.example.buyme.entity.Product;
-import com.example.buyme.service.ProductService;
+import com.example.buyme.product.entity.Product;
+import com.example.buyme.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

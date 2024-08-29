@@ -1,8 +1,8 @@
 package com.example.buyme.order.controller;
 
-import com.example.buyme.entity.Order;
-import com.example.buyme.entity.OrderItem;
-import com.example.buyme.service.OrderService;
+import com.example.buyme.order.entity.Order;
+import com.example.buyme.order.entity.OrderItem;
+import com.example.buyme.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

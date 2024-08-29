@@ -1,7 +1,7 @@
 package com.example.buyme.product.service;
 
-import com.example.buyme.entity.WishList;
-import com.example.buyme.repository.WishListRepository;
+import com.example.buyme.product.entity.WishList;
+import com.example.buyme.product.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.example.buyme.product.controller;
 
-import com.example.buyme.entity.WishList;
-import com.example.buyme.service.WishListService;
+import com.example.buyme.product.entity.WishList;
+import com.example.buyme.product.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
