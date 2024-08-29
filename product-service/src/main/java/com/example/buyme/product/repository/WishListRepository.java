@@ -7,5 +7,5 @@ package com.example.buyme.product.repository;
  import java.util.List;
 
 public interface WishListRepository extends JpaRepository<WishList, Long> {
-    List<WishList> findByUserUserId(Long userId);
+    List<WishList> findByUserId(Long userId);
 }

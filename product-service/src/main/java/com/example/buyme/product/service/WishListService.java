@@ -14,7 +14,7 @@ public class WishListService {
     private final WishListRepository wishListRepository;
 
     public List<WishList> getWishlistByUser(Long userId) {
-        return wishListRepository.findByUserUserId(userId);
+        return wishListRepository.findByUserId(userId);
     }
 
     public WishList addProductToWishList(WishList wishList) {
