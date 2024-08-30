@@ -21,4 +21,13 @@ public class ProductService {
     public Optional<Product> getProductById(Long productId) {
         return productRepository.findById(productId);
     }
+
+    public List<Product> getReservedProducts() {
+        return productRepository.findByProductType("RESERVED");
+    }
+
+    public List<Product> getNormalProducts() {
+        return productRepository.findByProductType("NORMAL");
+    }
+
 }
