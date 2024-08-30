@@ -18,6 +18,8 @@ public class ProductController {
 
     private final ProductService productService;
 
+
+
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
@@ -30,4 +32,17 @@ public class ProductController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/reserved")
+    public ResponseEntity<List<Product>> getReservedProducts() {
+        List<Product> products = productService.getReservedProducts();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/normal")
+    public ResponseEntity<List<Product>> getNormalProducts() {
+        List<Product> products = productService.getNormalProducts();
+        return ResponseEntity.ok(products);
+    }
+
 }
