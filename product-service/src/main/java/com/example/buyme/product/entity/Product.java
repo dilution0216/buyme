@@ -27,4 +27,7 @@ public class Product {
 
     @Column(nullable = false)
     private int productStock;
+
+    @Column(nullable = false)
+    private String productType; // 예: "RESERVED", "NORMAL"
 }
