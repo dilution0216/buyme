@@ -10,4 +10,6 @@ public class ProductDTO {
     private String productDescription;
     private int productPrice;
     private int productStock;
+    // 예: "RESERVED", "NORMAL" 상태
+    private String productType;
 }
