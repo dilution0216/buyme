@@ -4,6 +4,7 @@ import com.example.buyme.order.entity.Order;
 import com.example.buyme.order.entity.OrderItem;
 import com.example.buyme.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,4 +46,21 @@ public class OrderController {
         orderService.completeReturn(itemId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/{orderId}/enter-payment")
+    public ResponseEntity<Void> enterPayment(@PathVariable Long orderId) {
+        orderService.enterPayment(orderId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{orderId}/attempt-payment")
+    public ResponseEntity<Void> attemptPayment(@PathVariable Long orderId) {
+        boolean success = orderService.attemptPayment(orderId);
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
+        }
+    }
+
 }

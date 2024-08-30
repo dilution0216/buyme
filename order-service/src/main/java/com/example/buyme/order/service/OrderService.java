@@ -127,4 +127,27 @@ public class OrderService {
         product.setProductStock(product.getProductStock() + orderItem.getOrderItemQuantity());
         updateProductStock(product);  // product-service에 업데이트 요청
     }
+
+    public void enterPayment(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
+        if (order.getOrderStatus() != OrderStatus.PAID) {
+            throw new IllegalStateException("결제 가능 상태가 아닙니다");
+        }
+        order.setOrderStatus(OrderStatus.PAYMENT_ENTERED);
+        orderRepository.save(order);
+    }
+
+    public boolean attemptPayment(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
+        if (Math.random() > 0.2) {
+            order.setOrderStatus(OrderStatus.PAID);
+            orderRepository.save(order);
+            return true;
+        } else {
+            order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
+            orderRepository.save(order);
+            return false;
+        }
+    }
+
 }
