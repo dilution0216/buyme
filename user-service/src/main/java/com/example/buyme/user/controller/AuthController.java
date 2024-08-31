@@ -65,6 +65,19 @@ public class AuthController {
         return ResponseEntity.ok("로그아웃되었습니다.");
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String token) {
+        User user = authService.getUserFromToken(token);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<JwtAuthenticationResponse> refreshToken(@RequestHeader("Authorization") String token) {
+        JwtAuthenticationResponse response = authService.refreshToken(token);
+        return ResponseEntity.ok(response);
+    }
+
+
 //    @PutMapping("/logout-all")
 //    public ResponseEntity<?> logoutFromAllDevices(@RequestBody String email) {
 //        User user = userService.findUserByEmail(email);
