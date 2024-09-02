@@ -8,9 +8,11 @@ import com.example.buyme.order.enums.OrderStatus;
 import com.example.buyme.order.repository.OrderItemRepository;
 import com.example.buyme.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final WebClient.Builder webClientBuilder;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private static final String STOCK_LOCK_PREFIX = "product_stock_lock_";
 
     // Product 정보를 API를 통해 가져오는 메소드
     private Product getProductById(Long productId) {
@@ -33,14 +37,32 @@ public class OrderService {
     }
 
     // Product 재고를 업데이트하는 메소드
-    private void updateProductStock(Product product) {
-        webClientBuilder.build()
-                .put()
-                .uri("http://gateway-service/products/" + product.getProductId())
-                .bodyValue(product)
-                .retrieve()
-                .bodyToMono(Void.class)
-                .block();
+    private void updateProductStockWithLock(Long productId, int quantity) {
+        String lockKey = STOCK_LOCK_PREFIX + productId;
+        Boolean lock = redisTemplate.opsForValue().setIfAbsent(lockKey, "LOCK", Duration.ofSeconds(5));
+
+        if (Boolean.TRUE.equals(lock)) {
+            try {
+                Product product = getProductById(productId);
+                if (product.getProductStock() < quantity) {
+                    throw new RuntimeException("재고가 부족합니다.");
+                }
+                product.setProductStock(product.getProductStock() - quantity);
+
+                // product-service에 업데이트 요청
+                webClientBuilder.build()
+                        .put()
+                        .uri("http://gateway-service/api/products/" + productId)
+                        .bodyValue(product)
+                        .retrieve()
+                        .bodyToMono(Void.class)
+                        .block();
+            } finally {
+                redisTemplate.delete(lockKey);
+            }
+        } else {
+            throw new RuntimeException("잠금 획득에 실패했습니다. 다시 시도해주세요.");
+        }
     }
 
     public Order createOrder(Order order, List<OrderItem> orderItems) {
@@ -50,6 +72,7 @@ public class OrderService {
         orderRepository.save(order);
 
         for (OrderItem item : orderItems) {
+            updateProductStockWithLock(item.getProductId(), item.getOrderItemQuantity());
             item.setOrder(order);
             item.setOrderItemStatus(OrderItemStatus.ORDERED);
             orderItemRepository.save(item);
@@ -94,9 +117,7 @@ public class OrderService {
 
         // 재고 복구
         for (OrderItem item : order.getOrderItems()) {
-            Product product = getProductById(item.getProductId());
-            product.setProductStock(product.getProductStock() + item.getOrderItemQuantity());
-            updateProductStock(product);  // product-service에 업데이트 요청
+            updateProductStockWithLock(item.getProductId(), -item.getOrderItemQuantity());
         }
     }
 
@@ -123,9 +144,7 @@ public class OrderService {
         orderItemRepository.save(orderItem);
 
         // 재고 복구
-        Product product = getProductById(orderItem.getProductId());
-        product.setProductStock(product.getProductStock() + orderItem.getOrderItemQuantity());
-        updateProductStock(product);  // product-service에 업데이트 요청
+        updateProductStockWithLock(orderItem.getProductId(), orderItem.getOrderItemQuantity());
     }
 
     public void enterPayment(Long orderId) {
@@ -149,5 +168,4 @@ public class OrderService {
             return false;
         }
     }
-
 }

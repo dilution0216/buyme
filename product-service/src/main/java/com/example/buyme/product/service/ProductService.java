@@ -29,5 +29,13 @@ public class ProductService {
     public List<Product> getNormalProducts() {
         return productRepository.findByProductType("NORMAL");
     }
+    // 제품 재고를 업데이트하는 로직
+    public void updateProductStock(Long productId, int newStock) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
+        product.setProductStock(newStock);
+        productRepository.save(product);
+    }
+
 
 }

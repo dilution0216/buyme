@@ -1,13 +1,11 @@
 package com.example.buyme.product.controller;
 
+import com.example.buyme.product.dto.ProductDTO;
 import com.example.buyme.product.entity.Product;
 import com.example.buyme.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,5 +42,12 @@ public class ProductController {
         List<Product> products = productService.getNormalProducts();
         return ResponseEntity.ok(products);
     }
+    // 제품 재고를 업데이트하기 위해 product-service에 업데이트를 처리하는 엔드포인트
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        productService.updateProductStock(id, productDTO.getProductStock());
+        return ResponseEntity.ok().build();
+    }
+
 
 }
