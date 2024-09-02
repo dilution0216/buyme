@@ -8,7 +8,6 @@ import com.example.buyme.user.exception.EmailNotVerifiedException;
 import com.example.buyme.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,17 +46,4 @@ public class AuthService {
         tokenProvider.invalidateAllTokensForUser(user);
         log.info("유저 {} 가 모든 장치에서 로그아웃되었습니다.", user.getUserEmail());
     }
-
-    public User getUserFromToken(String token) {
-        String email = tokenProvider.getEmailFromToken(token);
-        return userRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-    }
-
-    public JwtAuthenticationResponse refreshToken(String token) {
-        User user = getUserFromToken(token);
-        String newToken = tokenProvider.generateToken(user);
-        return new JwtAuthenticationResponse(newToken);
-    }
-
 }

@@ -26,13 +26,4 @@ public class UserService {
     public User findUserByEmail(String email) {
         return userRepository.findByUserEmail(email).orElseThrow(() -> new UsernameNotFoundException("이메일을 통해 사용자를 찾을 수 없습니다.: " + email));
     }
-
-    public User updateUser(User user) {
-        User existingUser = findUserByEmail(user.getUserEmail());
-        existingUser.setUserName(user.getUserName());
-        existingUser.setAddress(user.getAddress());
-        // 추가적인 필드 업데이트
-        return userRepository.save(existingUser);
-    }
-
 }
