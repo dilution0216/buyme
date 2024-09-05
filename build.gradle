@@ -19,11 +19,11 @@ subprojects {
         mavenCentral()
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.6" // Spring Cloud BOM
-        }
-    }
+//    dependencyManagement {
+//        imports {
+//            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.6" // Spring Cloud BOM
+//        }
+//    }
 
     dependencies {
         // 공통 의존성 , jpa 는 gateway에서 안쓰므로 각 서비스에 저장
