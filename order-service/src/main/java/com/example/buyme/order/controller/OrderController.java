@@ -1,7 +1,8 @@
 package com.example.buyme.order.controller;
 
+import com.example.buyme.order.dto.OrderDTO;
+import com.example.buyme.order.dto.OrderRequest;
 import com.example.buyme.order.entity.Order;
-import com.example.buyme.order.entity.OrderItem;
 import com.example.buyme.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -18,15 +20,27 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order, @RequestBody List<OrderItem> orderItems) {
-        Order createdOrder = orderService.createOrder(order, orderItems);
-        return ResponseEntity.ok(createdOrder);
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            Order createdOrder = orderService.createOrder(orderRequest);
+            OrderDTO orderDTO = convertToDTO(createdOrder);  // 엔티티를 DTO로 변환
+            return ResponseEntity.ok(orderDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Order>> getOrdersByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable Long userId) {
         List<Order> orders = orderService.getOrdersByUser(userId);
-        return ResponseEntity.ok(orders);
+        List<OrderDTO> orderDTOs = orders.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(orderDTOs);
+    }
+
+    private OrderDTO convertToDTO(Order order) {
+        return orderService.convertToDTO(order);
     }
 
     @PostMapping("/{id}/cancel")
@@ -62,5 +76,4 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
         }
     }
-
 }
