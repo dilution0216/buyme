@@ -15,7 +15,7 @@ services:
       interval: 5s
       retries: 10
 
-  user-service:
+  user:
     build:
       context: ./user-service
       dockerfile: Dockerfile
@@ -28,7 +28,7 @@ services:
     depends_on:
       - db
 
-  product-service:
+  product:
     build:
       context: ./product-service
       dockerfile: Dockerfile
@@ -41,7 +41,7 @@ services:
     depends_on:
       - db
 
-  order-service:
+  order:
     build:
       context: ./order-service
       dockerfile: Dockerfile
@@ -62,16 +62,16 @@ services:
       - redis_data:/data
     command: ["redis-server", "--appendonly", "yes"]
 
-  gateway-service:
+  gateway:
     build:
       context: ./gateway-service
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
-      - user-service
-      - product-service
-      - order-service
+      - user
+      - product
+      - order
 
   adminer:
     image: adminer
