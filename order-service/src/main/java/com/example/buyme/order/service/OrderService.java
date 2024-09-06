@@ -10,10 +10,13 @@ import com.example.buyme.order.enums.OrderStatus;
 import com.example.buyme.order.repository.OrderItemRepository;
 import com.example.buyme.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,8 +25,46 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final RedissonClient redissonClient;
 
-    // 주문 생성 메서드
+
+//    public Order createOrder(OrderRequest orderRequest) {
+//        RLock lock = redissonClient.getLock("userOrderLock:" + orderRequest.getUserId());
+//        try {
+//            boolean isLocked = lock.tryLock(10, 2, TimeUnit.SECONDS);
+//            if (!isLocked) {
+//                throw new IllegalStateException("Another order is being processed for this user.");
+//            }
+//
+//            Order order = new Order();
+//            order.setUserId(orderRequest.getUserId());
+//            order.setOrderDate(LocalDateTime.now());
+//            order.setOrderStatus(OrderStatus.PENDING);
+//
+//            List<OrderItem> orderItems = orderRequest.getOrderItems().stream()
+//                    .map(itemRequest -> {
+//                        OrderItem item = new OrderItem();
+//                        item.setProductId(itemRequest.getProductId());
+//                        item.setOrderItemQuantity(itemRequest.getQuantity());
+//                        item.setOrderItemStatus(OrderItemStatus.ORDERED);
+//                        item.setOrder(order);
+//                        return item;
+//                    }).collect(Collectors.toList());
+//
+//            order.setOrderItems(orderItems);
+//            orderRepository.save(order);
+//
+//            return order;
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException("Error acquiring the lock", e);
+//        } finally {
+//            lock.unlock();
+//        }
+//    }
+
+
+
+//     주문 생성 메서드
     public Order createOrder(OrderRequest orderRequest) {
         Order order = new Order();
         order.setUserId(orderRequest.getUserId());
@@ -121,7 +162,36 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    // 결제 시도 메서드
+//    public boolean attemptPayment(Long orderId) {
+//        RLock lock = redissonClient.getLock("orderLock:" + orderId);
+//        try {
+//            // 락 획득 시도 (10초 동안 락을 획득하고, 2초간 유지)
+//            boolean isLocked = lock.tryLock(3, 1, TimeUnit.SECONDS);
+//            if (!isLocked) {
+//                throw new IllegalStateException("Order is being processed by another request.");
+//            }
+//
+//            // 주문 정보 조회 및 결제 시도 로직
+//            Order order = orderRepository.findById(orderId)
+//                    .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
+//
+//            if (Math.random() > 0.2) {  // 80% 확률로 결제 성공
+//                order.setOrderStatus(OrderStatus.PAID);
+//                orderRepository.save(order);
+//                return true;
+//            } else {
+//                order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
+//                orderRepository.save(order);
+//                return false;
+//            }
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException("Error acquiring the lock", e);
+//        } finally {
+//            lock.unlock();  // 락 해제
+//        }
+//    }
+
+//    // 결제 시도 메서드
     public boolean attemptPayment(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
