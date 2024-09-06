@@ -9,6 +9,7 @@ import com.example.buyme.order.enums.OrderItemStatus;
 import com.example.buyme.order.enums.OrderStatus;
 import com.example.buyme.order.repository.OrderItemRepository;
 import com.example.buyme.order.repository.OrderRepository;
+import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -27,7 +28,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final RedissonClient redissonClient;
 
-
+// 분산락 메서드
 //    public Order createOrder(OrderRequest orderRequest) {
 //        RLock lock = redissonClient.getLock("userOrderLock:" + orderRequest.getUserId());
 //        try {
@@ -61,10 +62,10 @@ public class OrderService {
 //            lock.unlock();
 //        }
 //    }
+// 분산락 메서드 끝
 
 
-
-//     주문 생성 메서드
+//     주문 생성 기본 메서드
     public Order createOrder(OrderRequest orderRequest) {
         Order order = new Order();
         order.setUserId(orderRequest.getUserId());
@@ -162,6 +163,7 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    // 분산 락 메서드 시작
 //    public boolean attemptPayment(Long orderId) {
 //        RLock lock = redissonClient.getLock("orderLock:" + orderId);
 //        try {
@@ -190,23 +192,50 @@ public class OrderService {
 //            lock.unlock();  // 락 해제
 //        }
 //    }
+    // 분산 락 메서드 끝
 
-//    // 결제 시도 메서드
+//    // 결제 시도 메서드 기본
+//    public boolean attemptPayment(Long orderId) {
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
+//
+//        // 결제 시도 로직
+//        if (Math.random() > 0.2) {  // 80% 확률로 결제 성공
+//            order.setOrderStatus(OrderStatus.PAID);
+//            orderRepository.save(order);
+//            return true;
+//        } else {
+//            order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
+//            orderRepository.save(order);
+//            return false;
+//        }
+//    }
+
+    // 낙관적 락 결제시도 메서드
+    // 낙관적 락을 적용한 결제 시도 메서드
     public boolean attemptPayment(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
+        try {
+            // 주문 정보 조회
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
 
-        // 결제 시도 로직
-        if (Math.random() > 0.2) {  // 80% 확률로 결제 성공
-            order.setOrderStatus(OrderStatus.PAID);
-            orderRepository.save(order);
-            return true;
-        } else {
-            order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
-            orderRepository.save(order);
-            return false;
+            // 결제 시도 로직
+            if (Math.random() > 0.2) {  // 80% 확률로 결제 성공
+                order.setOrderStatus(OrderStatus.PAID);
+                orderRepository.save(order);
+                return true;
+            } else {
+                order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
+                orderRepository.save(order);
+                return false;
+            }
+        } catch (OptimisticLockException e) {
+            // 다른 트랜잭션에서 먼저 변경한 경우 예외 처리
+            throw new RuntimeException("다른 요청이 먼저 처리되었습니다. 다시 시도해 주세요.", e);
         }
     }
+
+
 
     // 배송 중으로 상태 변경 (D+1)
     public void updateOrdersToShipped() {
