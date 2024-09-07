@@ -1,15 +1,19 @@
-# Buy me If you can
-
 ## 프로젝트 소개
+
+---
 
 - 수량이 정해져있는 물건을 선착순으로 재고만큼 구매할 수 있게 만든 서비스
 
 ## 프로젝트 목표
 
-- Redis에 기반한 대규모 주문 처리 및 MSA 설계를 통해 선착순 구매/주문/결제를 제공하는 서비스
-- 약 10000건의 대규모 트래픽 발생 시 성능 최적화
+---
+
+- 모노리스 서비스를 Docker-compose 환경에서 MSA 로 전환
+- 약 10000건의 대규모 주문 트래픽 발생 시 Redis 기반 성능 최적화
 
 ## 주요 기능
+
+---
 
 ### 1. **사용자 관리 (User Service)**
 
@@ -55,13 +59,19 @@
 
 ## 기술 스택
 
+---
+
 - **mysql**
 - **Spring Boot**
 - **Redis**
 - **Docker 및 Docker Compose**
 - **JMeter**
 
+- **postgress monogDB 각각의 차이점을 확인해보고, 무엇이 내서비스에 어울리는지, 이러한 이유로 mysql을 선택했다 는 것을 포트폴리오에 작성할 것. (업계에선 mysql과 postgres 가 자주 쓰임. mongoDB는 nosql이라 잘 안쓰임) // 기술적의사결정의 이유를 써야함**
+
 ## API & ERD
+
+---
 
  [API 명세서](https://www.notion.so/API-82e0878c996347ed8367bb808b7975de?pvs=21) 
 
@@ -69,9 +79,13 @@
 
 ## 성능 개선
 
+---
+
 https://dilution0216.tistory.com/294
 
 ## 트러블 슈팅
+
+---
 
 MSA 로 구조화 중 발생하는 이슈
 
@@ -81,6 +95,8 @@ https://dilution0216.tistory.com/278
 
 https://dilution0216.tistory.com/286
 
-락 사용 이슈
+Redis- 락 사용 이슈
 
-분산락 사용하였으나, 오히려 성능이 더 떨어짐
+https://dilution0216.tistory.com/294
+
+https://dilution0216.tistory.com/291
