@@ -66,9 +66,7 @@
 - **Redis**
 - **Docker 및 Docker Compose**
 - **JMeter**
-
-- **postgress monogDB 각각의 차이점을 확인해보고, 무엇이 내서비스에 어울리는지, 이러한 이유로 mysql을 선택했다 는 것을 포트폴리오에 작성할 것. (업계에선 mysql과 postgres 가 자주 쓰임. mongoDB는 nosql이라 잘 안쓰임) // 기술적의사결정의 이유를 써야함**
-
+  
 ## API & ERD
 
 ---
