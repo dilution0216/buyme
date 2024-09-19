@@ -79,26 +79,6 @@
 
 https://dilution0216.tistory.com/294
 
-## 트러블 슈팅
-
----
-
-MSA 로 구조화 중 발생하는 이슈
-
-https://dilution0216.tistory.com/278
-
-데이터 참조 이슈
-
-https://dilution0216.tistory.com/286
-
-Redis- 락 사용 이슈
-
-https://dilution0216.tistory.com/294
-
-https://dilution0216.tistory.com/291
-
-
-
 ### 트러블슈팅
 
 ---
