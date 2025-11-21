@@ -145,9 +145,19 @@ public class OrderService {
         }
     }
 
-    // 사용자별 주문 목록 조회
+    // 사용자별 주문 목록 조회 (N+1 쿼리 해결 - Fetch Join)
     public List<Order> getOrdersByUser(Long userId) {
-        return orderRepository.findAllByUserId(userId);
+        return orderRepository.findAllByUserIdWithItems(userId);
+    }
+
+    // 사용자별 특정 상태 주문 조회 (Fetch Join)
+    public List<Order> getOrdersByUserAndStatus(Long userId, OrderStatus status) {
+        return orderRepository.findByUserIdAndStatusWithItems(userId, status);
+    }
+
+    // 날짜 범위로 주문 조회 (Fetch Join)
+    public List<Order> getOrdersByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return orderRepository.findByDateRangeWithItems(startDate, endDate);
     }
 
     // DTO 변환 메서드
