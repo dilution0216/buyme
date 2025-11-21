@@ -58,9 +58,26 @@ public class ProductController {
 
     @GetMapping("/{id}/stock")
     public ResponseEntity<Integer> getProductStock(@PathVariable Long id) {
-        return productService.getProductById(id)
-                .map(product -> ResponseEntity.ok(product.getProductStock()))
-                .orElse(ResponseEntity.notFound().build());
+        int stock = productService.getProductStock(id);
+        return ResponseEntity.ok(stock);
+    }
+
+    // 재고 차감 API (분산락 적용)
+    @PostMapping("/{productId}/decrease-stock")
+    public ResponseEntity<Void> decreaseStock(
+            @PathVariable Long productId,
+            @RequestParam int quantity) {
+        productService.decreaseStock(productId, quantity);
+        return ResponseEntity.ok().build();
+    }
+
+    // 재고 증가 API (반품, 취소 시)
+    @PostMapping("/{productId}/increase-stock")
+    public ResponseEntity<Void> increaseStock(
+            @PathVariable Long productId,
+            @RequestParam int quantity) {
+        productService.increaseStock(productId, quantity);
+        return ResponseEntity.ok().build();
     }
 
 }

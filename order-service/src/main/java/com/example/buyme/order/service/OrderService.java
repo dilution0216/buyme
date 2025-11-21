@@ -11,9 +11,12 @@ import com.example.buyme.order.repository.OrderItemRepository;
 import com.example.buyme.order.repository.OrderRepository;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,11 +25,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final RedissonClient redissonClient;
+    private final WebClient webClient;
 
 // 분산락 메서드
 //    public Order createOrder(OrderRequest orderRequest) {
@@ -65,8 +70,32 @@ public class OrderService {
 // 분산락 메서드 끝
 
 
-//     주문 생성 기본 메서드
+//     주문 생성 메서드 (재고 차감 연동)
+    @Transactional
     public Order createOrder(OrderRequest orderRequest) {
+        // 1. 재고 차감 (분산락 적용)
+        for (var itemRequest : orderRequest.getOrderItems()) {
+            try {
+                webClient.post()
+                    .uri("/api/products/{productId}/decrease-stock?quantity={quantity}",
+                        itemRequest.getProductId(), itemRequest.getQuantity())
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+
+                log.info("재고 차감 요청 성공 - 상품ID: {}, 수량: {}",
+                    itemRequest.getProductId(), itemRequest.getQuantity());
+
+            } catch (Exception e) {
+                log.error("재고 차감 실패 - 상품ID: {}, 수량: {}",
+                    itemRequest.getProductId(), itemRequest.getQuantity(), e);
+                // 이미 차감된 재고 롤백
+                rollbackStock(orderRequest);
+                throw new RuntimeException("재고 부족 또는 재고 차감 실패: " + e.getMessage(), e);
+            }
+        }
+
+        // 2. 주문 생성 (낙관적 락 적용)
         Order order = new Order();
         order.setUserId(orderRequest.getUserId());
         order.setOrderDate(LocalDateTime.now());
@@ -78,14 +107,42 @@ public class OrderService {
                     item.setProductId(itemRequest.getProductId());
                     item.setOrderItemQuantity(itemRequest.getQuantity());
                     item.setOrderItemStatus(OrderItemStatus.ORDERED);
-                    item.setOrder(order);  // OrderItem에 Order 설정
+                    item.setOrder(order);
                     return item;
                 }).collect(Collectors.toList());
 
         order.setOrderItems(orderItems);
-        orderRepository.save(order);
 
-        return order;
+        try {
+            orderRepository.save(order);
+            log.info("주문 생성 성공 - 주문ID: {}, 사용자ID: {}", order.getOrderId(), order.getUserId());
+            return order;
+        } catch (OptimisticLockException e) {
+            // 주문 실패 시 재고 복구
+            rollbackStock(orderRequest);
+            throw new RuntimeException("주문 처리 중 오류가 발생했습니다. 다시 시도해주세요.", e);
+        }
+    }
+
+    // 재고 롤백 메서드
+    private void rollbackStock(OrderRequest orderRequest) {
+        for (var itemRequest : orderRequest.getOrderItems()) {
+            try {
+                webClient.post()
+                    .uri("/api/products/{productId}/increase-stock?quantity={quantity}",
+                        itemRequest.getProductId(), itemRequest.getQuantity())
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+
+                log.info("재고 롤백 성공 - 상품ID: {}, 수량: {}",
+                    itemRequest.getProductId(), itemRequest.getQuantity());
+
+            } catch (Exception e) {
+                log.error("재고 롤백 실패 - 상품ID: {}, 수량: {} (수동 확인 필요!)",
+                    itemRequest.getProductId(), itemRequest.getQuantity(), e);
+            }
+        }
     }
 
     // 사용자별 주문 목록 조회
@@ -115,7 +172,8 @@ public class OrderService {
         return orderItemDTO;
     }
 
-    // 주문 취소 메서드
+    // 주문 취소 메서드 (재고 복구)
+    @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 ID입니다"));
@@ -124,8 +182,28 @@ public class OrderService {
             throw new IllegalStateException("이미 배송되었거나 배송 완료된 주문은 취소할 수 없습니다");
         }
 
+        // 재고 복구
+        for (OrderItem item : order.getOrderItems()) {
+            try {
+                webClient.post()
+                    .uri("/api/products/{productId}/increase-stock?quantity={quantity}",
+                        item.getProductId(), item.getOrderItemQuantity())
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+
+                log.info("주문 취소 - 재고 복구 성공: 상품ID={}, 수량={}",
+                    item.getProductId(), item.getOrderItemQuantity());
+
+            } catch (Exception e) {
+                log.error("주문 취소 - 재고 복구 실패: 상품ID={}, 수량={} (수동 확인 필요!)",
+                    item.getProductId(), item.getOrderItemQuantity(), e);
+            }
+        }
+
         order.setOrderStatus(OrderStatus.CANCELED);
         orderRepository.save(order);
+        log.info("주문 취소 완료 - 주문ID: {}", orderId);
     }
 
     // 반품 요청 메서드
@@ -141,13 +219,32 @@ public class OrderService {
         orderItemRepository.save(orderItem);
     }
 
-    // 반품 완료 처리 메서드
+    // 반품 완료 처리 메서드 (재고 복구)
+    @Transactional
     public void completeReturn(Long orderItemId) {
         OrderItem orderItem = orderItemRepository.findById(orderItemId)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 주문 항목 ID입니다"));
 
+        // 재고 복구
+        try {
+            webClient.post()
+                .uri("/api/products/{productId}/increase-stock?quantity={quantity}",
+                    orderItem.getProductId(), orderItem.getOrderItemQuantity())
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+
+            log.info("반품 완료 - 재고 복구 성공: 상품ID={}, 수량={}",
+                orderItem.getProductId(), orderItem.getOrderItemQuantity());
+
+        } catch (Exception e) {
+            log.error("반품 완료 - 재고 복구 실패: 상품ID={}, 수량={} (수동 확인 필요!)",
+                orderItem.getProductId(), orderItem.getOrderItemQuantity(), e);
+        }
+
         orderItem.setOrderItemStatus(OrderItemStatus.RETURNED);
         orderItemRepository.save(orderItem);
+        log.info("반품 완료 - 주문항목ID: {}", orderItemId);
     }
 
     // 결제 처리 시작 메서드
