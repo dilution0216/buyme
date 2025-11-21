@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "product")
+@Table(name = "product", indexes = {
+    @Index(name = "idx_product_type", columnList = "productType"),
+    @Index(name = "idx_product_name", columnList = "productName")
+})
 public class Product {
 
     @Id
