@@ -25,8 +25,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/buyme
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 12345678
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
     depends_on:
       - db
+      - redis
 
   product:
     build:
@@ -38,8 +41,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/buyme
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 12345678
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
     depends_on:
       - db
+      - redis
 
   order:
     build:
@@ -51,8 +57,13 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/buyme
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 12345678
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      PRODUCT_SERVICE_URL: http://product:8082
     depends_on:
       - db
+      - redis
+      - product
 
   redis:
     image: "redis:latest"
