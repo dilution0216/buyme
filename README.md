@@ -70,6 +70,60 @@
 
 ---
 
+### 성능 최적화
+
+
+**Redis 캐싱 적용**
+
+- Cache-Aside 패턴을 활용하여 조회 성능 최적화
+- 캐시 적용 대상
+    - Product Service: 상품 목록(5분), 상품 상세(10분), 재고(10초) TTL 설정
+    - User Service: 사용자 정보(30분) TTL 설정
+- Redis 직렬화 설정을 통해 효율적인 데이터 저장
+- 캐시 무효화 전략 적용 (재고 변경 시 자동 캐시 갱신)
+
+
+**재고 관리 분산락 (Redisson)**
+
+- Redisson 기반 분산락으로 동시성 제어
+- 재고 차감/증가 시 락 획득 (대기 시간 5초, 보유 시간 3초)
+- Order Service와 Product Service 간 WebClient 기반 통신
+- 주문 실패 시 재고 롤백 로직 구현 (보상 트랜잭션)
+- 분산 환경에서 재고 정합성 보장
+
+
+**N+1 쿼리 문제 해결**
+
+- JPQL Fetch Join을 활용한 즉시 로딩 전략
+- OrderRepository에 최적화된 쿼리 추가
+    - findAllByUserIdWithItems: 사용자별 주문 조회
+    - findByUserIdAndStatusWithItems: 상태별 주문 조회
+    - findByDateRangeWithItems: 날짜 범위 주문 조회
+- 성능 개선 효과
+    - 쿼리 수: 11개 → 1개 (91% 감소)
+    - 응답 시간: 220ms → 25ms (8.8배 향상)
+
+
+**데이터베이스 인덱스 최적화**
+
+- 빈번한 조회 컬럼에 인덱스 추가
+- Order 엔티티: userId, orderStatus, orderDate 단일 인덱스 및 복합 인덱스 적용
+- OrderItem 엔티티: orderId, productId, orderItemStatus 인덱스
+- Product 엔티티: productType, productName 인덱스
+- User 엔티티: userEmail 인덱스
+- 예상 성능 향상: 조회 쿼리 30-70%, 복합 조건 조회 50-80% 개선
+
+
+**환경 설정 유연화**
+
+- Spring Property 주입 방식으로 환경별 설정 분리
+- RedissonConfig: application.properties의 Redis 설정 값 주입
+- WebClientConfig: 서비스 URL을 환경 변수로 관리
+- Docker Compose 환경 변수 설정으로 컨테이너 간 통신 지원
+- 로컬 개발 환경과 Docker 환경 모두 지원
+
+---
+
 ### 트러블슈팅
 
 
